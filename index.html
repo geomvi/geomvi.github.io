@@ -128,7 +128,11 @@
       </div>
       <div class="content has-text-justified">
         <p class="content has-text-justified">
-          [TODO: Add a brief description of the results here.]
+          The examples below show the input and inpainted scenes for the small-baseline object removal task.
+          The first column shows the input scene, the second column shows the inpainted scene by SPIn-NeRF,
+          and the third column shows the inpainted scene by our method. Notice that SPIn-NeRF often produces
+          blurry results, while our method produces sharp and consistent results across views.
+          Note that our method is NeRF-free, and here we have fitted a NeRF to the inpainted images for visualization purposes.
         </p>
       </div>
       <div class="container">
@@ -196,7 +200,7 @@
       <br />
       <div class="content has-text-justified">
         <p class="content has-text-justified">
-          [TODO: Add a brief description of the results here.]
+          The following visualization shows the inpainted images in each scene, inpainted by SPIn-NeRF and our method. Use the slider to iterate through the frames.
         </p>
       </div>
       <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
@@ -226,9 +230,9 @@
       <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
         class="container is-max-desktop has-text-centered">
         <h4 style="text-align:left;">Frame Control (automated playback or manual slider)</h2>
-          <p class="content has-text-justified">
+          <!-- <p class="content has-text-justified">
             [TODO: Maybe a description]
-          </p>
+          </p> -->
           <div class="row">
             <div class="col-2">
               <div onclick='spinnerf_viewer.stop_anim();' class=selectable>Stop animation</div>
@@ -263,6 +267,14 @@
           Qualitative Results for Wide-baseline Scene Completion
         </h1>
       </div>
+      <div class="content has-text-justified">
+        <p class="content has-text-justified">
+          The examples below show the input and inpainted scenes for the wide-baseline scene completion task.
+          The first column shows the input scene, the second column shows the inpainted scene by NeRFiller,
+          and the third column shows the inpainted scene by our method. Notice that NeRFiller often produces
+          blurry results, while our method produces sharper results across views.
+        </p>
+      </div>
       <div class="container">
         <div class="has-text-centered">
           <div class="row">
@@ -278,11 +290,6 @@
           </div>
         </div>
         <div id="results-carousel" class="carousel2 results-carousel">
-          <div class="item">
-            <video poster="" autoplay controls muted loop playsinline height="100%">
-              <source src="./assets/scene-completion/backpack.mp4" type="video/mp4">
-            </video>
-          </div>
           <div class="item">
             <video poster="" autoplay controls muted loop playsinline height="100%">
               <source src="./assets/scene-completion/billiards.mp4" type="video/mp4">
@@ -303,6 +310,11 @@
               <source src="./assets/scene-completion/office.mp4" type="video/mp4">
             </video>
           </div>
+          <div class="item">
+            <video poster="" autoplay controls muted loop playsinline height="100%">
+              <source src="./assets/scene-completion/backpack.mp4" type="video/mp4">
+            </video>
+          </div>
         </div>
       </div>
     </div>
@@ -320,6 +332,15 @@
         <h1>
           Qualitative Results for Few-View Inpainting
         </h1>
+      </div>
+      <div class="content has-text-justified">
+        <p class="content has-text-justified">
+          The examples below show the input and inpainted views for the few-view inpainting task.
+          The first column shows all the input views, the second column shows the inpainted views by SPIn-NeRF,
+          the third column shows the inpainted views by NeRFiller, and the fourth column shows the inpainted views by our method.
+          Notice that SPIn-NeRF and NeRFiller often produce blurry and inconsistent results, due to the incapability of NeRFs to
+          work on very few views. Our method, on the other hand, produces sharp and consistent results across views.
+        </p>
       </div>
       <div class="container" style="width: 1024px;">
         <div class="has-text-centered">
@@ -552,9 +573,11 @@
     <div class="content has-text-justified">
       <p class="content has-text-justified">
         Select two corresponding points in each image below.
-        The epipolar line from each point will be drawn in the images with the same colour as the point.
-        When both points have been selected, the minimum length line will be drawn between each point and its epipolar line, and the computed <i>SED</i> will be displayed under the image.
-        Notice that the SED is low when selecting the same points in the scene, while the SED is high when different points in the scene are selected for each image.
+        The Epipolar line from each point will be drawn in the images with the same color as the point.
+        When both points have been selected, the minimum length line will be drawn between each point and its
+        Epipolar line, and the computed <i>SED</i> will be displayed under the image.
+        Notice that the SED is low when selecting the same points in the scene, while the SED is high when
+        different points in the scene are selected for each image.
       </p>
     </div>
     <canvas id='epipolar-canvas' width='1024' height='512' style='cursor:crosshair;outline: 3px solid lightblue;width:100%;'></canvas>
@@ -571,6 +594,15 @@
           Method Overview
         </h1>
       </div>
+      <div class="content has-text-justified">
+        <p class="content has-text-justified">
+          We use a geometry-aware conditional diffusion model to consistently inpaint multi-view scenes. We inpaint the scene autoregressively,
+          conditioning each view on the previously inpainted views. We use a multi-view depth estimator to gradually estimate the geometry of the scene,
+          while inpainting the views. Instead of feeding the reference images directly to the model, we render a set of geometric cues from the reference images,
+          informing the model of the constraints that the scene geometry imposes. We also use the rendered geometric cues to fuse multiple reference images when
+          inpainting an image.
+        </p>
+      </div>
       <div class="hero-body">
         <img src="method.svg" style="float: right; margin-left:20px; margin-bottom: 10px; margin-top: 45px;"
           width="100%;" />
@@ -586,8 +618,9 @@
         <div class="column is-8">
           <div class="content">
             <p>
-              Website template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a> and <a
-                href="https://github.com/nesf3d/nesf3d.github.io">NeSF</a>.
+              Website template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a>,
+              <a href="https://github.com/nesf3d/nesf3d.github.io">NeSF</a>,
+              and <a href="https://yorkucvil.github.io/Photoconsistent-NVS/">Photoconsistent-NVS</a>
             </p>
           </div>
         </div>
