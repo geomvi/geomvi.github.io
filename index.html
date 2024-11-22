@@ -547,9 +547,22 @@
           </div>
         </div>
       </div>
+      <br />
+      <h2 class="title">Visualization of SED</h2>
+    <div class="content has-text-justified">
+      <p class="content has-text-justified">
+        Select two corresponding points in each image below.
+        The epipolar line from each point will be drawn in the images with the same colour as the point.
+        When both points have been selected, the minimum length line will be drawn between each point and its epipolar line, and the computed <i>SED</i> will be displayed under the image.
+        Notice that the SED is low when selecting the same points in the scene, while the SED is high when different points in the scene are selected for each image.
+      </p>
+    </div>
+    <canvas id='epipolar-canvas' width='1024' height='512' style='cursor:crosshair;outline: 3px solid lightblue;width:100%;'></canvas>
+    <div id='sed-display'> Null </div>
     </div>
     </div>
   </section>
+
   <section class="hero teaser">
     <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
       class="container is-max-desktop has-text-centered">
