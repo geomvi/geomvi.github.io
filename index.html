@@ -15,7 +15,7 @@
   <meta name="description" content="Geometry-Aware Diffusion Models for Multiview Scene Inpainting.">
   <meta name="keywords"
     content="Diffusion, 3D, consistent, geometry, inpainting, NeRF, SPIn-NeRF, NeRFiller, object removal, scene completion, few-view inpainting">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
   <title>Geometry-Aware Diffusion Models for Multiview Scene Inpainting</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
@@ -228,8 +228,8 @@
             The first column shows the input scene, the second column shows the inpainted scene by SPIn-NeRF,
             and the third column shows the inpainted scene by our method. Notice that SPIn-NeRF often produces
             blurry results, while our method produces sharp and consistent results across views.
-            Note that our method is NeRF-free, and here we have fitted a NeRF to the inpainted images for visualization
-            purposes.
+            Note also that our method is NeRF-free, and here we have fitted a NeRF to the inpainted images, solely
+            for visualization purposes.
           </p>
         </div>
         <div class="container">
@@ -248,67 +248,74 @@
           </div>
           <div id="results-carousel" class="carousel2 results-carousel">
             <div class="item">
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/object-removal/1.mp4" type="video/mp4">
               </video>
               <br>
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/object-removal/2.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/object-removal/3.mp4" type="video/mp4">
               </video>
               <br>
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/object-removal/4.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/object-removal/7.mp4" type="video/mp4">
               </video>
               <br>
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/object-removal/9.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/object-removal/10.mp4" type="video/mp4">
               </video>
               <br>
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/object-removal/12.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/object-removal/book.mp4" type="video/mp4">
               </video>
               <br>
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/object-removal/trash.mp4" type="video/mp4">
               </video>
             </div>
           </div>
         </div>
         <br />
+        <h2 class="title">Inpainted Test Views</h2>
         <div class="content has-text-justified">
           <p class="content has-text-justified">
             The following visualization shows the inpainted images in each scene, inpainted by SPIn-NeRF and our method.
-            Use the slider to iterate through the frames.
+            Use the slider and animation controls to iterate through the frames.
+            Note that the blurry artifacts along the image boundaries occur because, in the SPIn-NeRF benchmark, a NeRF
+            is first fit on the "training views", and the inpainted NeRF is then rendered to the "test views". Since the
+            training views do not fully cover the regions captured by the test views, this leads to artifacts—a common
+            artifact of NeRFs.
           </p>
         </div>
         <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
           class="container is-max-desktop has-text-centered">
-          <h4 style="text-align:left;">Scene Selection</h2>
+          <h4 style="text-align:left;">Scene Selection</h4>
+          <p class="content has-text-justified">
+            Select a scene to view the inpainted images.
+          </p>
             <div id='spinnerf-scene-selector' class="row" style="margin-left:0.1em;">
             </div>
         </div>
         <br />
-        <h3 class="subtitle">Samples</h3>
         <div class="row">
           <div class="col-3 px-0" style='flex:0 0 33.33%;max-width:33.33%;'>
             <img id='spinnerf-input' style='width:100%;' src="assets/individual-frames/spinnerf/0000/input/0000.webp">
@@ -406,27 +413,27 @@
           </div>
           <div id="results-carousel" class="carousel2 results-carousel">
             <div class="item">
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/scene-completion/billiards.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/scene-completion/drawing.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/scene-completion/norway.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/scene-completion/office.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
-              <video poster="" autoplay controls muted loop playsinline height="100%">
+              <video poster="" autoplay muted loop playsinline height="100%">
                 <source src="./assets/scene-completion/backpack.mp4" type="video/mp4">
               </video>
             </div>
@@ -689,13 +696,19 @@
         <h2 class="title">Visualization of SED</h2>
         <div class="content has-text-justified">
           <p class="content has-text-justified">
+            Since our inpainting method does not explicitly enforce 3D consistency through a
+            3D radiance field, we evaluate its geometric consistency using the Thresholded
+            Symmetric Epipolar Distance (TSED) metric
+            (<a href="https://yorkucvil.github.io/Photoconsistent-NVS/">Yu et al., 2023</a>).
+            This visualization showcases how <i>SED</i> is computed between a pair of images.
+          </p>
+          <p class="content has-text-justified">
             Select two corresponding points in each image below.
             The Epipolar line from each point will be drawn in the images with the same color as the point.
             When both points have been selected, the minimum length line will be drawn between each point and its
-            Epipolar line, and the computed <i>SED</i> will be displayed under the image.
+            Epipolar line, and the computed SED will be displayed under the image.
             Notice that the SED is low when selecting the same points in the scene, while the SED is high when
             different points in the scene are selected for each image.
-          </p>
         </div>
         <canvas id='epipolar-canvas' width='1024' height='512'
           style='cursor:crosshair;outline: 3px solid lightblue;width:100%;'></canvas>
@@ -714,13 +727,17 @@
       </div>
       <div class="content has-text-justified">
         <p class="content has-text-justified">
-          We use a geometry-aware conditional diffusion model to consistently inpaint multi-view scenes. We inpaint the
-          scene autoregressively,
-          conditioning each view on the previously inpainted views. We use a multi-view depth estimator to gradually
-          estimate the geometry of the scene,
-          while inpainting the views. Instead of feeding the reference images directly to the model, we render a set of
-          geometric cues from the reference images,
-          informing the model of the constraints that the scene geometry imposes. We also use the rendered geometric
+          We use a geometry-aware conditional diffusion model to consistently inpaint multi-view scenes.
+          We inpaint the scene autoregressively, conditioning each view on the previously inpainted views.
+          We use a multi-view depth estimator to gradually estimate the geometry of the scene, while
+          inpainting the views. Instead of feeding the reference images directly to the model, we render a
+          set of appearance and geometric cues from the reference images, informing the model of the
+          constraints that the scene geometry imposes.
+          We create a mesh using the estimated geometry, and render the appearance (RGB) and geometric
+          cues to the target view. The geometric cues include front-face mask, back-face mask, rendered
+          shadow volume, and depth, as depicted in the figure below.
+
+          We also use the rendered geometric
           cues to fuse multiple reference images when
           inpainting an image.
         </p>

@@ -23,8 +23,9 @@ $(document).ready(function() {
 		slidesToShow: 1,
 		loop: true,
 		infinite: false,
-		autoplay: false,
-		autoplaySpeed: 3000,
+		autoplay: true,
+		autoplaySpeed: 8000,
+		duration: 500,
 	}
 
 	// Initialize all div with carousel class
