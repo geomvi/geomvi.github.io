@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8CSYCP5584"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-8CSYCP5584');
+  </script>
+  <meta charset="utf-8">
+  <meta name="description" content="Geometry-Aware Diffusion Models for Multiview Scene Inpainting.">
+  <meta name="keywords"
+    content="Diffusion, 3D, consistent, geometry, inpainting, NeRF, SPIn-NeRF, NeRFiller, object removal, scene completion, few-view inpainting">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <title>Geometry-Aware Diffusion Models for Multiview Scene Inpainting</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <!-- <link rel="stylesheet" href="./static/css/bulma.min.css"> -->
+  <!-- <link rel="stylesheet" href="./static/css/bulma-carousel.min.css"> -->
+  <!-- <link rel="stylesheet" href="./static/css/bulma-slider.min.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-slider.min.css" />
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="math.js"></script>
+  <script src="main.js"></script>
+
+  <head>
+    <style media="all">
+      body {
+        font-family: 'Noto Sans', sans-serif;
+      }
+
+      .selectable:hover {
+        /* outline: 3px solid rgb(101, 4, 116); */
+        cursor: pointer;
+        border-radius: 1em;
+        -moz-box-shadow: 0 0 10px #ccc;
+        -webkit-box-shadow: 0 0 10px #ccc;
+        box-shadow: 0 0 10px #978e8e;
+      }
+
+      .project_author {
+        display: block;
+        text-align: center;
+      }
+
+      .author_icon {
+        box-shadow: 0 0 1em grey;
+        border-radius: 50%;
+        width: 100%;
+      }
+
+      .cite_bib {
+        display: block;
+        background: #e0e0e0;
+        font-family: monospace;
+        padding: 10px;
+        border-radius: 10px;
+        overflow: scroll;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body" style="padding-bottom:0;">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title text-muted">
+              Geometry-Aware Diffusion Models for Multiview Scene Inpainting
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/ahmadsalimi/">Ahmad Salimi</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.ca/citations?user=mV9zdJMAAAAJ&hl=en">Tristan Aumentado-Armstrong</a><sup>1,3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://mbrubake.github.io/">Marcus A. Brubaker</a><sup>1,2,4</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://csprofkgd.github.io/">Konstantinos G. Derpanis</a><sup>1,2,3</sup>
+              </span>
+            </div>
+            <div class="is-size-6 publication-authors">
+              <span class="author-block"><sup>1</sup>York University,</span>
+              <span class="author-block"><sup>2</sup>Vector Institute for AI,</span>
+              <span class="author-block"><sup>3</sup>Samsung AI Centre Toronto,</span>
+              <span class="author-block"><sup>4</sup>Google DeepMind</span>
+            </div>
+            <div class="is-size-6 publication-authors">
+              <span class="author-block"><code>{ahmadsa,marcus.brubaker,kosta}@yorku.ca</code>,</span>
+              <span class="author-block"><code>tristan.a@samsung.com</code></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero">
+    <div class="container is-max-desktop">
+      <div class="column has-text-centered">
+        <div class="publication-links">
+          <!-- PDF Link. -->
+          <span class="link-block">
+            <a href="#pdf" class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <i class="fas fa-file-pdf"></i>
+              </span>
+              <span>Paper (Coming Soon...)</span>
+            </a>
+          </span>
+          <span class="link-block">
+            <a href="#abs" class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <i class="ai ai-arxiv"></i>
+              </span>
+              <span>arXiv (Coming Soon...)</span>
+            </a>
+          </span>
+          <!-- Video Link. -->
+          <!-- <span class="link-block">
+            <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+              class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <i class="fab fa-youtube"></i>
+              </span>
+              <span>Video</span>
+            </a>
+          </span> -->
+          <!-- Code Link. -->
+          <span class="link-block">
+            <a href="#code" class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <i class="fab fa-github"></i>
+              </span>
+              <span>Code (Coming Soon...)</span>
+            </a>
+          </span>
+          <!-- Dataset Link. -->
+          <!-- <span class="link-block">
+            <a href="https://github.com/google/nerfies/releases/tag/0.1"
+              class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <i class="far fa-images"></i>
+              </span>
+              <span>Data</span>
+            </a>
+          </span> -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <img src="./assets/teaser.svg" style="float: right; margin-left:20px; margin-bottom: 10px; margin-top: 45px;"
+            width="50%;" />
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p class="content has-text-justified">
+              In this paper, we focus on 3D scene inpainting, where parts of an input image set,
+              captured from different viewpoints, are masked out. The main challenge lies in
+              generating plausible image completions that are geometrically consistent across
+              views. Most recent work addresses this challenge by combining generative models
+              with a 3D radiance field to fuse information across viewpoints. However, a major
+              drawback of these methods is that they often produce blurry images due to the
+              fusion of inconsistent cross-view images. To avoid blurry inpaintings, we eschew
+              the use of an explicit or implicit radiance field altogether and instead fuse
+              cross-view information in a learned space. In particular, we introduce a
+              geometry-aware conditional generative model, capable of inpainting multi-view
+              consistent images based on both geometric and appearance cues from reference
+              images. A key advantage of our approach over existing methods is its unique
+              ability to inpaint masked scenes with a limited number of views (i.e., few-view
+              inpainting), whereas previous methods require relatively large image sets for
+              their 3D model fitting step. Empirically, we evaluate and compare our scene-centric
+              inpainting method on two datasets, SPIn-NeRF and NeRFiller, which contain images
+              captured at narrow and wide baselines, respectively, and achieve state-of-the-art
+              3D inpainting performance on both. Additionally, we demonstrate the efficacy of our
+              approach in the few-view setting compared to prior methods.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+  <br />
+
+  <section class="hero teaser">
+    <div class="hero-body">
+      <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
+        class="container is-max-desktop has-text-centered">
+        <br />
+        <div class="content has-text-centered">
+          <h1>
+            Qualitative Results for Small-Baseline Object Removal
+          </h1>
+        </div>
+        <div class="content has-text-justified">
+          <p class="content has-text-justified">
+            The examples below show the input and inpainted scenes for the small-baseline object removal task.
+            The first column shows the input scene, the second column shows the inpainted scene by SPIn-NeRF,
+            and the third column shows the inpainted scene by our method. Notice that SPIn-NeRF often produces
+            blurry results, while our method produces sharp and consistent results across views.
+            Note also that our method is NeRF-free, and here we have fitted a NeRF to the inpainted images, solely
+            for visualization purposes.
+          </p>
+        </div>
+        <div class="container">
+          <div class="has-text-centered">
+            <div class="row">
+              <div class="col-4">
+                <h2 class="subtitle">Input Scene</h3>
+              </div>
+              <div class="col-4">
+                <h2 class="subtitle">SPIn-NeRF</h3>
+              </div>
+              <div class="col-4">
+                <h2 class="subtitle">Ours</h3>
+              </div>
+            </div>
+          </div>
+          <div id="results-carousel" class="carousel2 results-carousel">
+            <div class="item">
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/object-removal/1.mp4" type="video/mp4">
+              </video>
+              <br>
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/object-removal/2.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/object-removal/3.mp4" type="video/mp4">
+              </video>
+              <br>
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/object-removal/4.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/object-removal/7.mp4" type="video/mp4">
+              </video>
+              <br>
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/object-removal/9.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/object-removal/10.mp4" type="video/mp4">
+              </video>
+              <br>
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/object-removal/12.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/object-removal/book.mp4" type="video/mp4">
+              </video>
+              <br>
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/object-removal/trash.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        <br />
+        <h2 class="title">Inpainted Test Views</h2>
+        <div class="content has-text-justified">
+          <p class="content has-text-justified">
+            The following visualization shows the inpainted images in each scene, inpainted by SPIn-NeRF and our method.
+            Use the slider and animation controls to iterate through the frames.
+            Note that the blurry artifacts along the image boundaries occur because, in the SPIn-NeRF benchmark, a NeRF
+            is first fit on the "training views", and the inpainted NeRF is then rendered to the "test views". Since the
+            training views do not fully cover the regions captured by the test views, this leads to artifacts—a common
+            artifact of NeRFs.
+          </p>
+        </div>
+        <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
+          class="container is-max-desktop has-text-centered">
+          <h4 style="text-align:left;">Scene Selection</h4>
+          <p class="content has-text-justified">
+            Select a scene to view the inpainted images.
+          </p>
+            <div id='spinnerf-scene-selector' class="row" style="margin-left:0.1em;">
+            </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-3 px-0" style='flex:0 0 33.33%;max-width:33.33%;'>
+            <img id='spinnerf-input' style='width:100%;' src="assets/individual-frames/spinnerf/0000/input/0000.webp">
+            <h5 class="subtitle">Input</h5>
+          </div>
+          <div class="col-3 px-0" style='flex:0 0 33.33%;max-width:33.33%;'>
+            <img id='spinnerf-ours' style='width:100%;' src="assets/individual-frames/spinnerf/0000/ours/0000.webp">
+            <h5 class="subtitle">Ours</h5>
+          </div>
+          <div class="col-3 px-0" style='flex:0 0 33.33%;max-width:33.33%;'>
+            <img id='spinnerf-spinnerf' style='width:100%;'
+              src="assets/individual-frames/spinnerf/0000/spinnerf/0000.webp">
+            <h5 class="subtitle">SPIn-NeRF</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3 px-0" style='flex:0 0 33.49%;max-width:33.49%;'>
+            <img id='spinnerf-infusion' style='width:100%;'
+              src="assets/individual-frames/spinnerf/0000/infusion/0000.webp">
+            <h5 class="subtitle">InFusion</h5>
+          </div>
+          <div class="col-3 px-0" style='flex:0 0 33.25%;max-width:33.25%;'>
+            <img id='spinnerf-mvipnerf' style='width:100%;'
+              src="assets/individual-frames/spinnerf/0000/mvipnerf/0000.webp">
+            <h5 class="subtitle">MVIP-NeRF</h5>
+          </div>
+          <div class="col-3 px-0" style='flex:0 0 33.25%;max-width:33.25%;'>
+            <img id='spinnerf-maldnerf' style='width:100%;'
+              src="assets/individual-frames/spinnerf/0000/maldnerf/0000.webp">
+            <h5 class="subtitle">MALD-NeRF</h5>
+          </div>
+        </div>
+        <br />
+        <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
+          class="container is-max-desktop has-text-centered">
+          <h4 style="text-align:left;">Frame Control (automated playback or manual slider)</h2>
+            <!-- <p class="content has-text-justified">
+            [TODO: Maybe a description]
+          </p> -->
+            <div class="row">
+              <div class="col-2">
+                <div onclick='spinnerf_viewer.stop_anim();' class=selectable>Stop animation</div>
+              </div>
+              <div class="col-2">
+                <div onclick='spinnerf_viewer.cycle_frames(200);' class=selectable>Cycle 5fps</div>
+              </div>
+              <div class="col-2">
+                <div onclick='spinnerf_viewer.cycle_frames(100);' class=selectable>Cycle 10fps</div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <input style="width:100%;margin-left:1em;margin-right:1em;" type="range" min="0" max="39" value="0"
+                id='spinnerf_frame_control'
+                oninput='spinnerf_viewer.change_frame(document.getElementById("spinnerf_frame_control").value);'>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <br />
+
+  <section class="hero teaser">
+    <div class="hero-body">
+      <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
+        class="container is-max-desktop has-text-centered">
+        <br />
+        <div class="content has-text-centered">
+          <h1>
+            Qualitative Results for Wide-Baseline Scene Completion
+          </h1>
+        </div>
+        <div class="content has-text-justified">
+          <p class="content has-text-justified">
+            The examples below show the input and inpainted scenes for the wide-baseline scene completion task.
+            The first column shows the input scene, the second column shows the inpainted scene by NeRFiller,
+            and the third column shows the inpainted scene by our method. Notice that NeRFiller often produces
+            blurry results, while our method produces sharper results across views.
+          </p>
+        </div>
+        <div class="container">
+          <div class="has-text-centered">
+            <div class="row">
+              <div class="col-4">
+                <h2 class="subtitle">Input Scene</h3>
+              </div>
+              <div class="col-4">
+                <h2 class="subtitle">NeRFiller</h3>
+              </div>
+              <div class="col-4">
+                <h2 class="subtitle">Ours</h3>
+              </div>
+            </div>
+          </div>
+          <div id="results-carousel" class="carousel2 results-carousel">
+            <div class="item">
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/scene-completion/billiards.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/scene-completion/drawing.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/scene-completion/norway.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/scene-completion/office.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video poster="" autoplay muted loop playsinline height="100%">
+                <source src="./assets/scene-completion/backpack.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <br />
+
+  <section class="hero teaser">
+    <div class="hero-body">
+      <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
+        class="container is-max-desktop has-text-centered">
+        <br />
+        <div class="content has-text-centered">
+          <h1>
+            Qualitative Results for Few-View Inpainting
+          </h1>
+        </div>
+        <div class="content has-text-justified">
+          <p class="content has-text-justified">
+            The examples below show the input and inpainted views for the few-view inpainting task.
+            The first column shows all the input views, the second column shows the inpainted views by SPIn-NeRF,
+            the third column shows the inpainted views by NeRFiller, and the fourth column shows the inpainted views by
+            our method.
+            Notice that SPIn-NeRF and NeRFiller often produce blurry and inconsistent results, due to the incapability
+            of NeRFs to
+            work on very few views. Our method, on the other hand, produces sharp and consistent results across views.
+          </p>
+        </div>
+        <div class="container" style="width: 1024px;">
+          <div class="has-text-centered">
+            <div class="row">
+              <div class="col-3">
+                <h2 class="subtitle">Input View</h3>
+              </div>
+              <div class="col-3">
+                <h2 class="subtitle">SPIn-NeRF</h3>
+              </div>
+              <div class="col-3">
+                <h2 class="subtitle">NeRFiller</h3>
+              </div>
+              <div class="col-3">
+                <h2 class="subtitle">Ours</h3>
+              </div>
+            </div>
+          </div>
+          <div id="results-carousel" class="carousel2 results-carousel">
+
+            <div class="item">
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0004/input/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0004/spinnerf/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0004/nerfiller/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0004/ours/0000.webp" width="100%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0004/input/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0004/spinnerf/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0004/nerfiller/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0004/ours/0001.webp" width="100%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0004/input/0002.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0004/spinnerf/0002.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0004/nerfiller/0002.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0004/ours/0002.webp" width="100%">
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0001/input/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0001/spinnerf/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0001/nerfiller/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0001/ours/0000.webp" width="100%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0001/input/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0001/spinnerf/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0001/nerfiller/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0001/ours/0001.webp" width="100%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0001/input/0002.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0001/spinnerf/0002.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0001/nerfiller/0002.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0001/ours/0002.webp" width="100%">
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0002/input/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0002/spinnerf/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0002/nerfiller/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0002/ours/0000.webp" width="100%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0002/input/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0002/spinnerf/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0002/nerfiller/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0002/ours/0001.webp" width="100%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0002/input/0002.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0002/spinnerf/0002.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0002/nerfiller/0002.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0002/ours/0002.webp" width="100%">
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0000/input/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0000/spinnerf/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0000/nerfiller/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0000/ours/0000.webp" width="100%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0000/input/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0000/spinnerf/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0000/nerfiller/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0000/ours/0001.webp" width="100%">
+                </div>
+              </div>
+
+              <div class="row mt-5">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0003/input/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0003/spinnerf/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0003/nerfiller/0000.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0003/ours/0000.webp" width="100%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0003/input/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0003/spinnerf/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0003/nerfiller/0001.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0003/ours/0001.webp" width="100%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0003/input/0002.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0003/spinnerf/0002.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0003/nerfiller/0002.webp" width="100%">
+                </div>
+                <div class="col-3 mx-0 px-0">
+                  <img src="./assets/individual-frames/few-view/0003/ours/0002.webp" width="100%">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <h2 class="title">Visualization of SED</h2>
+        <div class="content has-text-justified">
+          <p class="content has-text-justified">
+            Since our inpainting method does not explicitly enforce 3D consistency through a
+            3D radiance field, we evaluate its geometric consistency using the Thresholded
+            Symmetric Epipolar Distance (TSED) metric
+            (<a href="https://yorkucvil.github.io/Photoconsistent-NVS/">Yu et al., 2023</a>).
+            This visualization showcases how <i>SED</i> is computed between a pair of images.
+          </p>
+          <p class="content has-text-justified">
+            Select two corresponding points in each image below.
+            The Epipolar line from each point will be drawn in the images with the same color as the point.
+            When both points have been selected, the minimum length line will be drawn between each point and its
+            Epipolar line, and the computed SED will be displayed under the image.
+            Notice that the SED is low when selecting the same points in the scene, while the SED is high when
+            different points in the scene are selected for each image.
+        </div>
+        <canvas id='epipolar-canvas' width='1024' height='512'
+          style='cursor:crosshair;outline: 3px solid lightblue;width:100%;'></canvas>
+        <div id='sed-display'> Null </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
+      class="container is-max-desktop has-text-centered">
+      <div class="content has-text-centered">
+        <h1>
+          Method Overview
+        </h1>
+      </div>
+      <div class="content has-text-justified">
+        <p class="content has-text-justified">
+          We use a geometry-aware conditional diffusion model to consistently inpaint multi-view scenes.
+          We inpaint the scene autoregressively, conditioning each view on the previously inpainted views.
+          We use a multi-view depth estimator to gradually estimate the geometry of the scene, while
+          inpainting the views. Instead of feeding the reference images directly to the model, we render a
+          set of appearance and geometric cues from the reference images, informing the model of the
+          constraints that the scene geometry imposes.
+          We create a mesh using the estimated geometry, and render the appearance (RGB) and geometric
+          cues to the target view. The geometric cues include front-face mask, back-face mask, rendered
+          shadow volume, and depth, as depicted in the figure below.
+
+          We also use the rendered geometric
+          cues to fuse multiple reference images when
+          inpainting an image.
+        </p>
+      </div>
+      <div class="hero-body">
+        <img src="./assets/method.svg" style="float: right; margin-left:20px; margin-bottom: 10px; margin-top: 45px;"
+          width="100%;" />
+      </div>
+    </div>
+  </section>
+
+  <br />
+
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{salimi2025geomvi,
+  title={Geometry-Aware Diffusion Models for Multiview Scene Inpainting},
+  author={Ahmad Salimi and Tristan Aumentado-Armstrong and Marcus A. Brubaker and Konstantinos G. Derpanis},
+  journal={arXiv preprint arXiv:xxxx.xxxxx},
+  year={2025}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              Website template adapted from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a>,
+              <a href="https://github.com/nesf3d/nesf3d.github.io">NeSF</a>,
+              and <a href="https://yorkucvil.github.io/Photoconsistent-NVS/">Photoconsistent-NVS</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
