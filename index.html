@@ -12,7 +12,9 @@
     gtag('config', 'G-8CSYCP5584');
   </script>
   <meta charset="utf-8">
-  <meta name="description" content="Geometry-Aware Diffusion Models for Multiview Scene Inpainting.">
+  <meta name="title" content="Geometry-Aware Diffusion Models for Multiview Scene Inpainting">
+  <meta name="description"
+    content="Geometry-aware 3D scene inpainting method ensuring multi-view consistency without radiance fields. Achieves state-of-the-art results, even with few views.">
   <meta name="keywords"
     content="Diffusion, 3D, consistent, geometry, inpainting, NeRF, SPIn-NeRF, NeRFiller, object removal, scene completion, few-view inpainting">
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
@@ -39,43 +41,162 @@
   <script src="math.js"></script>
   <script src="main.js"></script>
 
-  <head>
-    <style media="all">
-      body {
-        font-family: 'Noto Sans', sans-serif;
-      }
+  <style media="all">
+    body {
+      font-family: 'Noto Sans', sans-serif;
+    }
 
-      .selectable:hover {
-        /* outline: 3px solid rgb(101, 4, 116); */
-        cursor: pointer;
-        border-radius: 1em;
-        -moz-box-shadow: 0 0 10px #ccc;
-        -webkit-box-shadow: 0 0 10px #ccc;
-        box-shadow: 0 0 10px #978e8e;
-      }
+    .selectable:hover {
+      /* outline: 3px solid rgb(101, 4, 116); */
+      cursor: pointer;
+      border-radius: 1em;
+      -moz-box-shadow: 0 0 10px #ccc;
+      -webkit-box-shadow: 0 0 10px #ccc;
+      box-shadow: 0 0 10px #978e8e;
+    }
 
-      .project_author {
-        display: block;
-        text-align: center;
-      }
+    .project_author {
+      display: block;
+      text-align: center;
+    }
 
-      .author_icon {
-        box-shadow: 0 0 1em grey;
-        border-radius: 50%;
-        width: 100%;
-      }
+    .author_icon {
+      box-shadow: 0 0 1em grey;
+      border-radius: 50%;
+      width: 100%;
+    }
 
-      .cite_bib {
-        display: block;
-        background: #e0e0e0;
-        font-family: monospace;
-        padding: 10px;
-        border-radius: 10px;
-        overflow: scroll;
-        white-space: nowrap;
+    .cite_bib {
+      display: block;
+      background: #e0e0e0;
+      font-family: monospace;
+      padding: 10px;
+      border-radius: 10px;
+      overflow: scroll;
+      white-space: nowrap;
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "name": "Geometry-Aware Diffusion Models for Multiview Scene Inpainting",
+    "headline": "Geometry-Aware Diffusion Models for Multiview Scene Inpainting",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Ahmad Salimi",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "York University",
+          "url": "https://www.yorku.ca/"
+        },
+        "email": "ahmadsa@yorku.ca",
+        "sameAs": "https://www.linkedin.com/in/ahmadsalimi"
+      },
+      {
+        "@type": "Person",
+        "name": "Tristan Aumentado-Armstrong",
+        "affiliation": [
+          {
+            "@type": "Organization",
+            "name": "Samsung AI Centre Toronto",
+            "url": "https://research.samsung.com/aicenter_toronto"
+          },
+          {
+            "@type": "Organization",
+            "name": "York University",
+            "url": "https://www.yorku.ca/"
+          }
+        ],
+        "email": "tristan.a@samsung.com",
+        "sameAs": "https://scholar.google.com/citations?hl=en&user=mV9zdJMAAAAJ"
+      },
+      {
+        "@type": "Person",
+        "name": "Marcus A. Brubaker",
+        "affiliation": [
+          {
+            "@type": "Organization",
+            "name": "York University",
+            "url": "https://www.yorku.ca/"
+          },
+          {
+            "@type": "Organization",
+            "name": "Vector Institute for AI",
+            "url": "https://vectorinstitute.ai/"
+          },
+          {
+            "@type": "Organization",
+            "name": "Google DeepMind",
+            "url": "https://www.deepmind.com/"
+          }
+        ],
+        "email": "marcus.brubaker@yorku.ca",
+        "sameAs": "https://mbrubake.github.io/"
+      },
+      {
+        "@type": "Person",
+        "name": "Konstantinos G. Derpanis",
+        "affiliation": [
+          {
+            "@type": "Organization",
+            "name": "York University",
+            "url": "https://www.yorku.ca/"
+          },
+          {
+            "@type": "Organization",
+            "name": "Vector Institute for AI",
+            "url": "https://vectorinstitute.ai/"
+          },
+          {
+            "@type": "Organization",
+            "name": "Samsung AI Centre Toronto",
+            "url": "https://research.samsung.com/aicenter_toronto"
+          }
+        ],
+        "email": "kosta@yorku.ca",
+        "sameAs": "https://csprofkgd.github.io/"
       }
-    </style>
-  </head>
+    ],
+    "datePublished": "2025-02-18",
+    "publisher": {
+      "@type": "Organization",
+      "name": "arXiv",
+      "url": "https://arxiv.org/"
+    },
+    "url": "https://geomvi.github.io/",
+    "identifier": {
+      "@type": "PropertyValue",
+      "propertyID": "arXiv",
+      "value": "arXiv:2502.13335"
+    },
+    "license": "http://arxiv.org/licenses/nonexclusive-distrib/1.0/",
+    "keywords": [
+    "3D Scene Inpainting",
+    "Geometry-Aware Diffusion Models",
+    "Multiview Consistency",
+    "Diffusion",
+    "3D",
+    "consistent",
+    "geometry",
+    "inpainting",
+    "NeRF",
+    "SPIn-NeRF",
+    "NeRFiller",
+    "object removal",
+    "scene completion",
+    "few-view inpainting"
+  ],
+    "abstract": "In this paper, we focus on 3D scene inpainting, where parts of an input image set, captured from different viewpoints, are masked out. The main challenge lies in generating plausible image completions that are geometrically consistent across views. Most recent work addresses this challenge by combining generative models with a 3D radiance field to fuse information across viewpoints. However, a major drawback of these methods is that they often produce blurry images due to the fusion of inconsistent cross-view images. To avoid blurry inpaintings, we eschew the use of an explicit or implicit radiance field altogether and instead fuse cross-view information in a learned space. In particular, we introduce a geometry-aware conditional generative model, capable of inpainting multi-view consistent images based on both geometric and appearance cues from reference images. A key advantage of our approach over existing methods is its unique ability to inpaint masked scenes with a limited number of views (i.e., few-view inpainting), whereas previous methods require relatively large image sets for their 3D model fitting step. Empirically, we evaluate and compare our scene-centric inpainting method on two datasets, SPIn-NeRF and NeRFiller, which contain images captured at narrow and wide baselines, respectively, and achieve state-of-the-art 3D inpainting performance on both. Additionally, we demonstrate the efficacy of our approach in the few-view setting compared to prior methods.",
+    "isPartOf": {
+      "@type": "PublicationVolume",
+      "name": "arXiv",
+      "datePublished": "2025"
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -124,7 +245,8 @@
         <div class="publication-links">
           <!-- PDF Link. -->
           <span class="link-block">
-            <a href="https://arxiv.org/pdf/2502.13335" class="external-link button is-normal is-rounded is-dark" target="_blank">
+            <a href="https://arxiv.org/pdf/2502.13335" class="external-link button is-normal is-rounded is-dark"
+              target="_blank">
               <span class="icon">
                 <i class="fas fa-file-pdf"></i>
               </span>
@@ -132,7 +254,8 @@
             </a>
           </span>
           <span class="link-block">
-            <a href="https://arxiv.org/abs/2502.13335" class="external-link button is-normal is-rounded is-dark" target="_blank">
+            <a href="https://arxiv.org/abs/2502.13335" class="external-link button is-normal is-rounded is-dark"
+              target="_blank">
               <span class="icon">
                 <i class="ai ai-arxiv"></i>
               </span>
@@ -218,11 +341,9 @@
       <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
         class="container is-max-desktop has-text-centered">
         <br />
-        <div class="content has-text-centered">
-          <h1>
-            Qualitative Results for Small-Baseline Object Removal
-          </h1>
-        </div>
+        <h2 class="title">
+          Qualitative Results for Small-Baseline Object Removal
+        </h2>
         <div class="content has-text-justified">
           <p class="content has-text-justified">
             The examples below show the input and inpainted scenes for the small-baseline object removal task.
@@ -237,13 +358,13 @@
           <div class="has-text-centered">
             <div class="row">
               <div class="col-4">
-                <h2 class="subtitle">Input Scene</h3>
+                <h3 class="subtitle">Input Scene</h3>
               </div>
               <div class="col-4">
-                <h2 class="subtitle">SPIn-NeRF</h3>
+                <h3 class="subtitle">SPIn-NeRF</h3>
               </div>
               <div class="col-4">
-                <h2 class="subtitle">Ours</h3>
+                <h3 class="subtitle">Ours</h3>
               </div>
             </div>
           </div>
@@ -296,7 +417,8 @@
           </div>
         </div>
         <br />
-        <h2 class="title">Inpainted Test Views</h2>
+        <br />
+        <h3 class="title">Inpainted Test Views</h3>
         <div class="content has-text-justified">
           <p class="content has-text-justified">
             The following visualization shows the inpainted images in each scene, inpainted by SPIn-NeRF and our method.
@@ -313,8 +435,8 @@
           <p class="content has-text-justified">
             Select a scene to view the inpainted images.
           </p>
-            <div id='spinnerf-scene-selector' class="row" style="margin-left:0.1em;">
-            </div>
+          <div id='spinnerf-scene-selector' class="row" style="margin-left:0.1em;">
+          </div>
         </div>
         <br />
         <div class="row">
@@ -385,11 +507,9 @@
       <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
         class="container is-max-desktop has-text-centered">
         <br />
-        <div class="content has-text-centered">
-          <h1>
-            Qualitative Results for Wide-Baseline Scene Completion
-          </h1>
-        </div>
+        <h2 class="title">
+          Qualitative Results for Wide-Baseline Scene Completion
+        </h2>
         <div class="content has-text-justified">
           <p class="content has-text-justified">
             The examples below show the input and inpainted scenes for the wide-baseline scene completion task.
@@ -402,13 +522,13 @@
           <div class="has-text-centered">
             <div class="row">
               <div class="col-4">
-                <h2 class="subtitle">Input Scene</h3>
+                <h3 class="subtitle">Input Scene</h3>
               </div>
               <div class="col-4">
-                <h2 class="subtitle">NeRFiller</h3>
+                <h3 class="subtitle">NeRFiller</h3>
               </div>
               <div class="col-4">
-                <h2 class="subtitle">Ours</h3>
+                <h3 class="subtitle">Ours</h3>
               </div>
             </div>
           </div>
@@ -451,11 +571,9 @@
       <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
         class="container is-max-desktop has-text-centered">
         <br />
-        <div class="content has-text-centered">
-          <h1>
-            Qualitative Results for Few-View Inpainting
-          </h1>
-        </div>
+        <h2 class="title">
+          Qualitative Results for Few-View Inpainting
+        </h2>
         <div class="content has-text-justified">
           <p class="content has-text-justified">
             The examples below show the input and inpainted views for the few-view inpainting task.
@@ -471,16 +589,16 @@
           <div class="has-text-centered">
             <div class="row">
               <div class="col-3">
-                <h2 class="subtitle">Input View</h3>
+                <h3 class="subtitle">Input View</h3>
               </div>
               <div class="col-3">
-                <h2 class="subtitle">SPIn-NeRF</h3>
+                <h3 class="subtitle">SPIn-NeRF</h3>
               </div>
               <div class="col-3">
-                <h2 class="subtitle">NeRFiller</h3>
+                <h3 class="subtitle">NeRFiller</h3>
               </div>
               <div class="col-3">
-                <h2 class="subtitle">Ours</h3>
+                <h3 class="subtitle">Ours</h3>
               </div>
             </div>
           </div>
@@ -694,7 +812,7 @@
           </div>
         </div>
         <br />
-        <h2 class="title">Visualization of SED</h2>
+        <h3 class="title">Visualization of SED</h3>
         <div class="content has-text-justified">
           <p class="content has-text-justified">
             Since our inpainting method does not explicitly enforce 3D consistency through a
@@ -721,11 +839,9 @@
   <section class="hero teaser">
     <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;'
       class="container is-max-desktop has-text-centered">
-      <div class="content has-text-centered">
-        <h1>
-          Method Overview
-        </h1>
-      </div>
+      <h2 class="title">
+        Method Overview
+      </h2>
       <div class="content has-text-justified">
         <p class="content has-text-justified">
           We use a geometry-aware conditional diffusion model to consistently inpaint multi-view scenes.
@@ -737,7 +853,6 @@
           We create a mesh using the estimated geometry, and render the appearance (RGB) and geometric
           cues to the target view. The geometric cues include front-face mask, back-face mask, rendered
           shadow volume, and depth, as depicted in the figure below.
-
           We also use the rendered geometric
           cues to fuse multiple reference images when
           inpainting an image.
